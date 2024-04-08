@@ -1,0 +1,133 @@
+\documentclass[a4paper]{article}
+
+\usepackage[english]{babel}
+\usepackage[utf8x]{inputenc}
+\usepackage{amsmath} % Required for align* environment
+\usepackage{graphicx}
+\usepackage[colorinlistoftodos]{todonotes}
+%\usepackage[margin=1.2in]{geometry}
+\usepackage{geometry}
+\geometry{margin=1in} % Adjust margins as needed
+
+\title{Poisson Distribution Proving}
+\author{Oloyede Abdulganiyu}
+\date{March 07, 2024}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+This is a LATEX project as well as a poisson distribution project, helping me practice the provings of poisson distributions I have learnt in my days as a statistics student of University of Ilorin.
+\end{abstract}
+
+\section{Problem}
+\begin{center}
+Let X~ Poisson(\lambda)\\
+\text{where} \lambda > 0.\\
+Find the variance of X
+\end{center}
+
+\section{Solution}
+\begin{center}
+Before we could solve for the variance of the poisson distribution, we first have to solve for the mean since the var(X) could be denoted by:\\
+var(x) &= E(x^2) - \mu^2 \\
+&= E(x^2) - [E(x)]^2\\
+We are also going to note the series expansion of $\exp(a)$  as:\\
+\exp(a) = \sum_{y=0}^{\infty}\frac{a^y}{y!}
+\end{center}
+
+\subsection{Solving for Mean}
+\begin{center}
+Using the Poisson probability mass function (PMF) formula:
+\begin{align*}
+f(x) = P(X = x) &= \frac{\lambda^x \exp(-\lambda)}{x!}\\
+\text{and mean is } E(x) \text{ given by:}\\
+E(x) &= \sum_{x=0}^{\infty} xf(x) \\
+&= \sum_{x=0}^{\infty} x \frac{\lambda^x \exp(-\lambda)}{x!}
+\end{align*}
+
+We spread out the summation:
+
+\begin{align*}
+&= \frac{(1\lambda^1 \exp(-\lambda))}{1!} + \frac{(2\lambda^2 \exp(-\lambda))}{2!} + \frac{(3\lambda^3 \exp(-\lambda))}{3!} + \frac{(4\lambda^4 \exp(-\lambda))}{4!} + \dots + \\
+&\quad \frac{(\infty\lambda^\infty \exp(-\lambda))}{\infty!}
+\end{align*}
+
+Simplifying the expression:
+
+\begin{align*}
+&= \lambda \exp(-\lambda) + \lambda^2 \exp(-\lambda) + \lambda^3 \exp(-\lambda) + \dots + \lambda^\infty \exp(-\lambda) \\
+&= \lambda \exp(-\lambda) (1 + \lambda + \frac{\lambda^2}{2!} + \frac{\lambda^3}{3!} + \frac{\lambda^4}{4!} + \dots) \\
+%\text{using the exponential series expansion stated earlier, the summation series above will be equal to} \exp(\lambda)\\
+&= \lambda \exp(-\lambda) \exp(\lambda) \\
+&= \lambda \exp(-\lambda+\lambda)  \\
+&= \lambda
+\end{align*}
+
+\end{center}
+
+\subsection{Solving for Variance}
+\begin{center}
+Using the Poisson probability mass function (PMF) formula stated in section 2 above:
+\begin{align*}
+\text{Var}(X) &= E((X - \mu)^2) \\
+&= E(X^2) - \mu^2\\
+\text{And as we've solved in the equation of  mean above, } \mu = \lambda \text{, thus:}\\
+&= E(X^2) - \lambda^2
+\end{align*}
+
+We need to calculate \(E(X^2)\) first. 
+\begin{align*}
+E(X^2) &= \sum_{x=0}^{\infty} x^2 f(x) \\
+&= \sum_{x=0}^{\infty} x^2 \frac{\lambda^x \exp(-\lambda)}{x!}\\
+\text{you'll agree with me} \\
+x^2 = x (x-1) + x \\
+\thus \\
+E(x^2) &= E(x (x-1) + x) \\
+&= E(x (x-1)) + E(x)\\
+\text{and as we've already established} E(x) = \lambda\\
+\text{so we'll focus on the first part: } E(x (x-1))\\
+E(x (x-1)) &=  \sum_{x=0}^{\infty} x(x-1) \frac{\lambda^x \exp(-\lambda)}{x!}\\
+&= \exp(-\lambda) \lambda^2 \sum_{x=2}^{\infty} x(x-1) \frac{\lambda^{x-2} }{(x-2)!}\\
+\text{let} y = x-2 \text{so,}\\
+&= \exp(-\lambda) \lambda^2 \sum_{y=0}^{\infty} x(x-1) \frac{\lambda^{y} }{y!}\\
+%&= \exp(-\lambda) \sum_{x=0}^{\infty} x^2 \frac{\lambda^x }{x!}\\
+%&= \exp(-\lambda) \lambda^2 \sum_{x=2}^{\infty} x(x-1)\frac{\lambda^{x-2} }{x(x-1)(x-2)!}\\
+%&= \exp(-\lambda) \lambda^2 \sum_{x=2}^{\infty}\frac{\lambda^{x-2}}{(x-2)!}\\
+%\text{let x-2 be y}\\
+%&= \exp(-\lambda) \lambda^2 \sum_{y=0}^{\infty}\frac{\lambda^{y}}{(y)!}\\
+\text{and once again we have our exponential expansion series}\\
+&= \exp(-\lambda) \lambda^2 \exp(\lambda) \\
+&= \lambda^2 \exp(-\lambda +\lambda )\\
+%&= \lambda^2 \exp(-\lambda +\lambda)\\
+&= \lambda^2 \exp(0)\\
+E(x(x-1) &= \lambda^2\\
+\text{then bringing it back up to} x^2\\
+E(x^2) = E(x(x-1) + x) = E(x(x-1)) + E(x) = \lamda^2 + \lambda \\
+\text{and back to variance}\\
+\text{substituting this back into the variance formula:}\\
+\text{Var}(X) &= E(X^2) - \lambda^2\\
+&= \lamda^2 + \lambda - (\lambda)^2 \\
+&= \lambda
+\end{align*}
+
+Finally, substituting this back into the variance formula:\\
+So, the variance of a Poisson distribution with parameter \( \lambda \) is \(\lamda\) too.
+\end{center}
+
+\section{ References:}
+$
+[1] 
+https://proofwiki.org/wiki/Power_Series_Expansion_for_Exponential_Function
+\newline
+[2] http://www.math.com/tables/expansion/exp.htm
+\newline
+[3] https://en.wikipedia.org/wiki/Discrete_cosine_transform.
+\newline
+[4] ...
+\newline
+[5] ... .
+\newline
+[6] https://www.overleaf.com .
+$
+\end{document}
